@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diabetes Prediction</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .container { max-width: 500px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        #result { margin-top: 20px; font-weight: bold; text-align: center; color: #007bff; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Diabetes Prediction Form</h2>
+        <form id="predictionForm">
+            <input type="number" id="AGE" placeholder="Age" required step="any">
+            <input type="number" id="Urea" placeholder="Urea" required step="any">
+            <input type="number" id="Cr" placeholder="Creatinine (Cr)" required step="any">
+            <input type="number" id="HbA1c" placeholder="HbA1c" required step="any">
+            <input type="number" id="Chol" placeholder="Cholesterol" required step="any">
+            <input type="number" id="TG" placeholder="TG" required step="any">
+            <input type="number" id="HDL" placeholder="HDL" required step="any">
+            <input type="number" id="LDL" placeholder="LDL" required step="any">
+            <input type="number" id="VLDL" placeholder="VLDL" required step="any">
+            <input type="number" id="BMI" placeholder="BMI" required step="any">
+            <select id="Gender">
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <button type="submit">Predict Status</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                AGE: parseFloat(document.getElementById('AGE').value),
+                Urea: parseFloat(document.getElementById('Urea').value),
+                Cr: parseFloat(document.getElementById('Cr').value),
+                HbA1c: parseFloat(document.getElementById('HbA1c').value),
+                Chol: parseFloat(document.getElementById('Chol').value),
+                TG: parseFloat(document.getElementById('TG').value),
+                HDL: parseFloat(document.getElementById('HDL').value),
+                LDL: parseFloat(document.getElementById('LDL').value),
+                VLDL: parseFloat(document.getElementById('VLDL').value),
+                BMI: parseFloat(document.getElementById('BMI').value),
+                Gender: document.getElementById('Gender').value
+            };
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = "Result: " + result.status;
+        });
+    </script>
+</body>
+</html>
