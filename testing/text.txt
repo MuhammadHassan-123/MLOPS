@@ -1,0 +1,1 @@
+AS in ths we put all screenshot of test using curl command 
