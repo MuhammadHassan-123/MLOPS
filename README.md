@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+#Description how t run the project
 # MLOPS
 NEW REPO FOR RESEARCH MLOPS PROJECT
 hello checking
